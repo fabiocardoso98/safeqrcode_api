@@ -34,6 +34,31 @@ module.exports = {
       console.log("7")
       res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado3", status: "error", data: null, error: error });
     }
+  },
+  login(req, res) {
+    try {
+      const {username, password} = req.body;
+      users.findOne({where: {username: username}}).then(user => {
+        if (!user) {
+          res.send({ msg: "Utilizador ou palavra passe não coincidem.", status: 'fail', error: null });
+        }
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if(err){
+            res.send({ msg: 'Falha na comunicação, tente mais tarde!!', status: 'error', error: err });
+          }
+          if(isMatch){
+            res.send({ msg: "Sessão iniciada com sucesso", status: 'success', error: null, data: user });
+          }else{
+            res.send({ msg: "Utilizador ou palavra passe não coincidem.", status: 'fail', error: null, data: null}); 
+          }
+        })
+      })
+      .catch(err => {
+            res.send({ msg: 'Falha na comunicação, tente mais tarde!!', status: 'error', error: err });
+      });
+    } catch (error) {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado", status: "error", data: null, error: error });
+    }
   }
 } 
  
