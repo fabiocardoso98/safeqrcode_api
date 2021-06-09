@@ -59,6 +59,17 @@ module.exports = {
     } catch (error) {
       res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado", status: "error", data: null, error: error });
     }
+  },
+  allUsers(req, res) {
+    users.findAll().then(result => {
+      if(result) {
+        res.send({ msg: "Utilizadores encontrados com sucesso", status: "success", data: result, error: null });
+      }else{
+        res.send({ msg: "Não existe utilizadores.", status: "fail", data: null, error: null });
+      }
+    }).catch(error => {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    })
   }
 } 
  
