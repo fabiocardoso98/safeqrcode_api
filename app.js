@@ -22,7 +22,7 @@ app.get('/', function (req, res) {
 //{ force: true }
 
 sequelize.sync().then(() => {
-  app.listen(config.PORT,config.HOST, function () {
+  app.listen(config.PORT, function () {
     console.log(`App listening on http://${config.HOST}:${config.PORT}`);
   });
 });
