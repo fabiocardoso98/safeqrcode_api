@@ -70,6 +70,18 @@ module.exports = {
     }).catch(error => {
       res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
     })
+  },
+  oneUser(req, res) {
+    users.findByPk(req.params.id).then(result => {
+      if(result) {
+        res.send({ msg: "Utilizador encontrado com sucesso", status: "success", data: result, error: null });
+      }else{
+        res.send({ msg: "Não existe utilizador com esse id: " + req.params.id + ".", status: "fail", data: null, error: null });
+      }
+    }).catch(error => {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    })
+
   }
 } 
  

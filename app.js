@@ -12,13 +12,14 @@ app.use(express.static(path.resolve(__dirname, 'static')));
 
 //Routes
 app.use('/user', require('./routes/usersRoutes'));
+app.use('/qrcodes', require('./routes/qrcodesRoutes'));
 
 app.get('/', function (req, res) {
     res.send('Bem-vindo a API do safe qr code')
   })
 
   
-{ force: true }
+//{ force: true }
 
 sequelize.sync().then(() => {
   app.listen(config.PORT,config.HOST, function () {
