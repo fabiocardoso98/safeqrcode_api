@@ -13,6 +13,7 @@ app.use(express.static(path.resolve(__dirname, 'static')));
 //Routes
 app.use('/user', require('./routes/usersRoutes'));
 app.use('/qrcodes', require('./routes/qrcodesRoutes'));
+app.use('/folders', require('./routes/foldersRoutes'));
 
 app.get('/', function (req, res) {
     res.send('Bem-vindo a API do safe qr code')

@@ -1,44 +1,41 @@
 
 module.exports = (sequelize, DataTypes) => {
-  const qrcodes = sequelize.define('qrcodes', {
+  const folders = sequelize.define('folders', {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
-    name: {
+    nome: {
       type: DataTypes.STRING(50)
-    },
-    content: {
-      type: DataTypes.TEXT()
     },
     img: {
       type: DataTypes.STRING(50)
     },
-    latlng: {
+    cor: {
       type: DataTypes.STRING(50)
     },
-    adress: {
-      type: DataTypes.TEXT()
+    partilhado: {
+      type: DataTypes.BOOLEAN
     },
-    createDate: {
+    dataAdicionado: {
       type: DataTypes.DATE
     },
-    updateDate: {
+    dataAtualizado: {
       type: DataTypes.DATE
     }
   },{
     timestamps: false
   });
 
-  qrcodes.associate = qr => {
-    qrcodes.belongsTo(qr.categories),
-    qrcodes.belongsTo(qr.users),
-    qrcodes.belongsToMany(qr.folders, {
+  folders.associate = folder => {
+    folders.belongsTo(folder.categories),
+    folders.belongsTo(folder.users),
+    folders.belongsToMany(folder.qrcodes, {
       through: 'foldersQrCodes',
       timestamps: false
     })
   }
   
-  return qrcodes
+  return folders
 }
