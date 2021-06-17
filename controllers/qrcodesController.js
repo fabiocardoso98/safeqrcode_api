@@ -42,6 +42,17 @@ module.exports = {
     }).catch(error => {
       res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
     })
+  },
+  getQrCodeByUser(req, res) {
+    qrcodes.findAll({ where: { userId: req.body.userId }}).then(result => {
+      if(result != 0) {
+        res.send({ msg: "Qrcodes encontrados com sucesso", status: "success", data: result, error: null });
+      }else{
+        res.send({ msg: "Não existe qrcodes.", status: "success", data: null, error: null });
+      }
+    }).catch(error => {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    })
   }
 } 
  
