@@ -7,7 +7,7 @@ const qrcodesController = require('../controllers/qrcodesController');
 // router.post('', usersController.setUser);
 
 router.post('', qrcodesController.saveQrCode);
-router.get('/user', qrcodesController.getQrCodeByUser);
+router.get('/user/:userId', qrcodesController.getQrCodeByUser);
 router.get('', qrcodesController.getAllQrCode);
 router.get('/:id', qrcodesController.getOneQrCode);
 

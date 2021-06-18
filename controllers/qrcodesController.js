@@ -44,7 +44,7 @@ module.exports = {
     })
   },
   getQrCodeByUser(req, res) {
-    qrcodes.findAll({ where: { userId: req.body.userId }}).then(result => {
+    qrcodes.findAll({ where: { userId: req.params.userId }}).then(result => {
       if(result != 0) {
         res.send({ msg: "Qrcodes encontrados com sucesso", status: "success", data: result, error: null });
       }else{
