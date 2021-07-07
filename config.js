@@ -9,7 +9,7 @@ dotenv.config({
 module.exports = {
   NODE_ENV: process.env.NODE_ENV || 'development',
   HOST: process.env.HOST || 'localhost',
-  PORT: process.env.PORT || 5000,
+  PORT: process.env.PORT || 6000,
   DB_USERNAME: process.env.DB_USERNAME || 'root',
   DB_PASSWORD: process.env.DB_PASSWORD || '',
   DB_NAME: process.env.DB_NAME || 'safeqrcode',

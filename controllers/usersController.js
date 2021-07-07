@@ -81,7 +81,42 @@ module.exports = {
     }).catch(error => {
       res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
     })
-
+  },
+  removeUser(req, res) {
+    try {
+      users.destroy({ where: { id: req.params.id } }).then(result => {
+        if(result) {
+          res.send({ msg: "Utilizador eliminado com sucesso", status: "success", data: null, error: null });
+        }else{
+          res.send({ msg: "Não existe utilizador com esse id: " + req.params.id + ".", status: "fail", data: null, error: null });
+        }
+      }).catch(error => {
+        res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+      })
+    } catch (error) {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    }
+  },
+  updateUser(req, res){
+    try {
+      users.findByPk(req.params.id).then(user=> {
+        if(user) {
+            user.update(req.body).then(result=> {
+              if(result) {
+                res.send({ msg: "Utilizador atualizado com sucesso", status: "success", data: result, error: null });
+              }else{
+                res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+              }
+            })
+        }else{
+          res.send({ msg: "Não existe utilizador com esse id: " + req.params.id + ".", status: "fail", data: null, error: null });
+        }
+      }).catch(error => {
+        res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+      })
+    } catch (error) {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    }
   }
 } 
  
