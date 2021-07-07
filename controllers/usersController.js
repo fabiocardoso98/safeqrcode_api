@@ -34,6 +34,93 @@ module.exports = {
       console.log("7")
       res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado3", status: "error", data: null, error: error });
     }
+<<<<<<< Updated upstream
+=======
+  },
+  login(req, res) {
+    try {
+      const {username, password} = req.body;
+      users.findOne({where: {username: username}}).then(user => {
+        if (!user) {
+          res.send({ msg: "Utilizador ou palavra passe não coincidem.", status: 'fail', error: null });
+        }
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if(err){
+            res.send({ msg: 'Falha na comunicação, tente mais tarde!!', status: 'error', error: err });
+          }
+          if(isMatch){
+            res.send({ msg: "Sessão iniciada com sucesso", status: 'success', error: null, data: user });
+          }else{
+            res.send({ msg: "Utilizador ou palavra passe não coincidem.", status: 'fail', error: null, data: null}); 
+          }
+        })
+      })
+      .catch(err => {
+            res.send({ msg: 'Falha na comunicação, tente mais tarde!!', status: 'error', error: err });
+      });
+    } catch (error) {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado", status: "error", data: null, error: error });
+    }
+  },
+  allUsers(req, res) {
+    users.findAll().then(result => {
+      if(result) {
+        res.send({ msg: "Utilizadores encontrados com sucesso", status: "success", data: result, error: null });
+      }else{
+        res.send({ msg: "Não existe utilizadores.", status: "fail", data: null, error: null });
+      }
+    }).catch(error => {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    })
+  },
+  oneUser(req, res) {
+    users.findByPk(req.params.id).then(result => {
+      if(result) {
+        res.send({ msg: "Utilizador encontrado com sucesso", status: "success", data: result, error: null });
+      }else{
+        res.send({ msg: "Não existe utilizador com esse id: " + req.params.id + ".", status: "fail", data: null, error: null });
+      }
+    }).catch(error => {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    })
+
+  },
+  removeUser(req, res) {
+    try {
+      users.destroy({ where: { id: req.params.id } }).then(result => {
+        if(result) {
+          res.send({ msg: "Utilizador eliminado com sucesso", status: "success", data: null, error: null });
+        }else{
+          res.send({ msg: "Não existe utilizador com esse id: " + req.params.id + ".", status: "fail", data: null, error: null });
+        }
+      }).catch(error => {
+        res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+      })
+    } catch (error) {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    }
+  },
+  updateUser(req, res){
+    try {
+      users.findByPk(req.params.id).then(user=> {
+        if(user) {
+            user.update(req.body).then(result=> {
+              if(result) {
+                res.send({ msg: "Utilizador atualizado com sucesso", status: "success", data: result, error: null });
+              }else{
+                res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+              }
+            })
+        }else{
+          res.send({ msg: "Não existe utilizador com esse id: " + req.params.id + ".", status: "fail", data: null, error: null });
+        }
+      }).catch(error => {
+        res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+      })
+    } catch (error) {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    }
+>>>>>>> Stashed changes
   }
 } 
  
