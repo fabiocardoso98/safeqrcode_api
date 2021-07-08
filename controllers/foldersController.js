@@ -41,7 +41,7 @@ module.exports = {
     
   },
   getFolderByUser(req, res) {
-    folders.findAll({ where: { userId: req.body.userId }, includes: qrcodes }).then(result => {
+    folders.findAll({ where: { userId: req.params.userId }, includes: qrcodes }).then(result => {
       if(result) {
         res.send({ msg: "Pastas encontradas com sucesso", status: "success", data: result, error: null });
       }else{
@@ -83,6 +83,42 @@ module.exports = {
     }).catch(error => {
       res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
     })
+  },
+  removeFolder(req, res) {
+    try {
+      folders.destroy({ where: { [Op.and]: [{  id: req.params.folderId }, { userId: req.params.userId }]  } }).then(result => {
+        if(result) {
+          res.send({ msg: "Pasta eliminada com sucesso", status: "success", data: null, error: null });
+        }else{
+          res.send({ msg: "Não existe essa pasta com esse id: " + req.params.folderId + ".", status: "fail", data: null, error: null });
+        }
+      }).catch(error => {
+        res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+      })
+    } catch (error) {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    }
+  },
+  updateFolder(req, res) {
+    try {
+      folders.findByPk(req.params.id).then(folder=> {
+        if(folder) {
+          folder.update(req.body).then(result=> {
+              if(result) {
+                res.send({ msg: "Pasta atualizada com sucesso", status: "success", data: result, error: null });
+              }else{
+                res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+              }
+            })
+        }else{
+          res.send({ msg: "Não existe utilizador com esse id: " + req.params.id + ".", status: "fail", data: null, error: null });
+        }
+      }).catch(error => {
+        res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+      })
+    } catch (error) {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    }
   }
 } 
  
