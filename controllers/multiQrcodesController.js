@@ -10,9 +10,9 @@ module.exports = {
     try {
       qrcodes.create(req.body).then(result => {
         if(result) {
-          res.send({ msg: "Qrcode criado", status: "success", data: result, error: null });
+          res.send({ msg: "Multi qrcode criado", status: "success", data: result, error: null });
         }else{
-          res.send({ msg: "Qrcode não criado, tente mais tarde", status: "fail", data: null, error: null });
+          res.send({ msg: "Multi qrcode criado, tente mais tarde", status: "fail", data: null, error: null });
         }
       }).catch(error => { 
         res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado", status: "error", data: null, error: error });
