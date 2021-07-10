@@ -22,13 +22,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE
     }
   },{
-    timestamps: false
+    timestamps: false 
   });
 
-  MultiQrcodes.associate = qr => {
-    MultiQrcodes.belongsTo(qr.categories),
-    MultiQrcodes.belongsTo(qr.users),
-    MultiQrcodes.belongsToMany(qr.qrcodes, {
+  MultiQrcodes.associate = MultiQr => {
+    MultiQrcodes.belongsTo(MultiQr.categories),
+    MultiQrcodes.belongsTo(MultiQr.users),
+    MultiQrcodes.belongsToMany(MultiQr.qrcodes, {
       through: 'MultiQrcodesToQrcodes',
       timestamps: false
     })

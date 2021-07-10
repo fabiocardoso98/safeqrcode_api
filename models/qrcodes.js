@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
     qrcodes.belongsToMany(qr.folders, {
       through: 'foldersQrCodes',
       timestamps: false
+    }),
+    qrcodes.belongsToMany(qr.MultiQrcodes, {
+      through: 'MultiQrcodesToQrcodes',
+      timestamps: false
     })
   }
   
