@@ -74,7 +74,7 @@ module.exports = {
     })
   },
   getOneFolder(req, res) {
-    folders.findByPk(req.params.id).then(result => {
+    folders.findAll({ where: { id: req.params.id }, include: [{model: qrcodes, through: { attributes: [] }}] }).then(result => {
       if(result) {
         res.send({ msg: "Pasta encontrada com sucesso", status: "success", data: result, error: null });
       }else{
