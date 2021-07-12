@@ -9,6 +9,7 @@ const qrcodesController = require('../controllers/qrcodesController');
 router.post('', qrcodesController.saveQrCode);
 router.get('/user/:userId', qrcodesController.getQrCodeByUser);
 router.get('', qrcodesController.getAllQrCode);
+router.get('/folder/:id', qrcodesController.getQrCodeByFolder);
 router.get('/:id', qrcodesController.getOneQrCode);
 router.delete('/:id', qrcodesController.deleteQrCode);
 router.put('/:id', qrcodesController.updateQrCode);

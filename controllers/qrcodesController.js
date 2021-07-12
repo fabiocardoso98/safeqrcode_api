@@ -1,4 +1,4 @@
-const { qrcodes } = require('../models');
+const { qrcodes, folders } = require('../models');
 const Sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
 const Op = Sequelize.Op;
@@ -50,6 +50,58 @@ module.exports = {
       }else{
         res.send({ msg: "Não existe qrcodes.", status: "success", data: null, error: null });
       }
+    }).catch(error => {
+      res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
+    })
+  },
+  getQrCodeByFolder(req, res) {
+    folders.findAll({ where: { id: req.params.id }, include: [{model: qrcodes, through: { attributes: [] }}]}).then( folders => {
+      var temp = {
+        id: 0,
+        name: "",
+        content: "",
+        img: "",
+        latlng: "",
+        adress: "",
+        createDate: "",
+        updateDate: "",
+        categoryId: 0,
+        userId: 0,
+        folderId: 0
+      }
+      var arrTemp = [];
+
+      folders[0].qrcodes.forEach(qrcode => {
+        console.log(folders[0].id)
+        temp.id = qrcode.id,
+        temp.name = qrcode.name,
+        temp.content = qrcode.content,
+        temp.img = qrcode.img,
+        temp.latlng = qrcode.latlng,
+        temp.adress = qrcode.adress,
+        temp.createDate = qrcode.createDate,
+        temp.updateDate = qrcode.updateDate,
+        temp.categoryId = qrcode.categoryId,
+        temp.userId = qrcode.userId,
+        temp.folderId = folders[0].id
+        arrTemp.push(temp);
+        temp = {
+          id: 0,
+          name: "",
+          content: "",
+          img: "",
+          latlng: "",
+          adress: "",
+          createDate: "",
+          updateDate: "",
+          categoryId: 0,
+          userId: 0,
+          folderId: 0
+        }
+      });
+
+      res.send({ msg: "Qrcodes encontrados com sucesso", status: "success", data: arrTemp, error: null });
+      
     }).catch(error => {
       res.send({ msg: "Aconteceu algum erro, tente mais tarde, obrigado.", status: "error", data: null, error: error });
     })
